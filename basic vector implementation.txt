@@ -1,0 +1,81 @@
+/*-----------------C-O-D-I-N-G------------------------------
+  Code crafted by: derco 
+  ---------------------I-S----------------------------------
+  Jadavpur University, Information Technology.
+  --------------------A-R-T---------------------------------*/
+#include <bits/stdc++.h>
+#include <iostream>
+#include <boost/multiprecision/cpp_int.hpp> 
+
+using namespace boost::multiprecision;
+using namespace std;
+
+#define F ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define ull unsigned long long int
+#define double long double
+
+int main()
+{
+	F;
+	//cout<<"GfG!";
+    ll t,n;
+    cin>>t;
+    while(t--)
+    {
+        cin>>n;
+        vector<ll> zombie;
+        vector<ll> start;
+        vector<ll> end;
+        ll i,x;
+        for(i=0;i<=n;i++)
+        {
+            start.push_back(0LL);
+            end.push_back(0LL);
+        }
+        for(i=1;i<=n;i++)
+        {
+            cin>>x;
+            start[(max(1LL,(i-x)))]++;
+            end[(min(n,(i+x)))]++;
+        }
+        
+        zombie.push_back(0LL);
+        for(i=1;i<=n;i++)
+        {
+            cin>>x;
+            zombie.push_back(x);
+        }
+        sort(zombie.begin(),zombie.end());
+        
+        for(i=n-1;i>=1;i--)
+        {
+            start[i]+=start[i+1];
+            end[i]+=end[i+1];
+        }
+        
+        vector<ll> s;
+        s.push_back(0LL);
+        for(i=1;i<n;i++)
+        {
+            s.push_back((end[i]-start[i+1]));
+        }
+        s.push_back(end[n]);
+
+        sort(s.begin(),s.end());
+        
+        string r="YES";
+        i=1;
+        for(;i<=n;i++)
+        {
+            if(s[i] != zombie[i])
+            {
+                r="NO";
+                break;
+            }
+        }
+        cout<<r<<endl;
+    }
+	return 0;
+}

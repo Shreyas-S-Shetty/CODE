@@ -1,0 +1,2 @@
+1)when  we equate two pointers then the left pointer is changed and it points where the right pointer is pointing to.
+2)In the last node the value stored in p->next=NULL

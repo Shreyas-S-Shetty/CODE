@@ -1,0 +1,130 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+ 
+class node
+{
+    public:
+    int data;
+    node* lchild;
+    node* rchild;
+};
+ 
+class madtree
+{                
+    public:
+    node* root;
+    queue<node *>Q;
+    public:
+    madtree()
+    {
+        root=new node;
+        root->data=5;
+        root->lchild=NULL;
+        root->rchild=NULL;
+        Q.push(root);
+    }
+    void create()
+    {
+        while(!Q.empty())
+        {
+        node *p=Q.front();
+        Q.pop();
+        int x,y;
+        cin>>x;
+        if(x!=-1)
+        {
+            node *lc=new node;
+            lc->data=x;
+            lc->lchild=NULL;
+            lc->rchild=NULL;
+            p->lchild=lc;
+            Q.push(lc);
+        }
+        cin>>y;
+        if(y!=-1)
+        {
+            node *rc=new node;
+            rc->data=y;
+            rc->lchild=NULL;
+            rc->rchild=NULL;
+            p->rchild=rc;
+            Q.push(rc);
+        }
+        }
+    }
+    void preorder(node *p)
+    {
+        stack<node *>s;
+        s.push(p);
+        while(!s.empty())
+        {
+            node *ds=s.top();
+            s.pop();
+            if(ds->rchild)
+            s.push(ds->rchild);
+            if(ds->lchild)
+            s.push(ds->lchild);
+            cout<<ds->data<<endl;
+        }
+    }
+    void postorder(node *p)
+    {
+        stack<node*> s;
+        int n=0;
+        while(!s.empty()||n==0)
+        {
+            n=1;
+            while(p->lchild&&p->rchild)
+            {
+                s.push(p);
+                p=p->lchild;
+            }
+            cout<<p->data<<endl;
+            p=NULL;
+            node* t=s.top();
+            if(t->rchild!=NULL)
+            s.push(t->rchild);
+            else
+            {
+                cout<<t->data<<endl;
+                t=NULL;
+            }
+            p=s.top();
+            s.pop();
+        }
+    }
+      int height(node *p)
+    {
+        static int count=0;
+        if(p)
+        return count=1+max(height(p->lchild),height(p->rchild));
+        return 0;
+    }
+    /*int height(node* node)  
+{  
+    if (node == NULL)  
+        return 0;  
+    else
+    {  
+        /* compute the depth of each subtree */
+        int lDepth = height(node->lchild);  
+        int rDepth = height(node->rchild);  
+ 
+        /* use the larger one */
+        /*if (lDepth > rDepth)  
+            return(lDepth + 1);  
+        else return(rDepth + 1);  
+    }  
+} */
+};
+ 
+int main()
+{
+    madtree t;
+    t.create();
+    t.preorder(t.root);
+    //t.postorder(t.root);
+    cout<<t.height(t.root)<<endl;
+}
+ 

@@ -1,0 +1,3 @@
+push(&stack_name,ele);
+
+pop(&stack_name);

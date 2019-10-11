@@ -1,0 +1,7 @@
+Bro you have not initialised you dp[] array because of which, maybe it is taking garbage value / no value at all (I haven’t debugged it cause it seemed to be an obvious error)at some point of time.
+
+Just add this line after you declaration of ll dp[n+1]:
+
+-> memset(dp,0,sizeof(dp));
+
+it’ll work fine then! :+1:

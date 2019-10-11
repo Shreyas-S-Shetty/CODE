@@ -1,0 +1,15 @@
+
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+#define fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+using namespace std;
+//using boost::multiprecision::cpp_int;
+typedef long long LL;
+typedef long double LD;
+const int inf=0x3f3f3f3f;
+const int infi=1e9+7;
+LL
+int main()
+{
+    fast;
+}

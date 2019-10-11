@@ -1,0 +1,148 @@
+#include<bits/stdc++.h>
+using namespace std;
+class node
+{
+    public:
+    int data;
+    node *lchild;
+    node *rchild;
+};
+class Queue
+{
+    private:
+    int size;
+    int front;
+    int rear;
+    node** Q;
+    public:
+    Queue()
+    {
+    size=100;
+    front=rear=-1;
+    Q=new node*[size];
+    }
+    Queue(int size)
+    {
+    this->size=size;
+    front=rear=-1;
+    Q=new node*[this->size];
+    }
+    void enqueue(node*,Queue*);
+    node* dequeue(Queue*);
+    int isempty(Queue *q){
+        return (q->front==q->rear);
+    }
+};
+
+class tree
+{
+    public:
+    node* root;
+    public:
+    tree()
+    {
+        root=NULL;
+    }
+    void createtree();
+    void preorder(node*);
+    int height(node*);
+};
+
+
+
+
+void tree::createtree()
+{
+    int x;
+    Queue q(100);
+    node*t;
+    node*t1;
+    cout<<"enter root value\n";
+    cin>>x;
+    root=new node;
+    root->data=x;
+    root->lchild=NULL;
+    root->rchild=NULL;
+    q.enqueue(root,&q);
+    while(!q.isempty(&q))
+    {
+       t1=q.dequeue(&q);
+       cout<<"enter lchild\n";
+       cin>>x;
+       if(x!=-1)
+       {
+           t=new node;
+           t->data=x;
+           t->lchild=NULL;
+           t->rchild=NULL;
+           t1->lchild=t;
+          q.enqueue(t,&q);
+       }
+       cout<<"enter rchild\n";
+       cin>>x;
+       if(x!=-1)
+       {
+           t=new node;
+           t->data=x;
+           t->lchild=NULL;
+           t->rchild=NULL;
+           t1->rchild=t;
+           q.enqueue(t,&q);
+       }
+    }
+}
+ 
+
+void Queue::enqueue(node* p,Queue *q)
+{
+    if((q->rear+1)%(q->size)==q->front)
+    cout<<"queue full"<<endl;
+    else
+    {
+        q->rear=(q->rear+1)%(q->size);
+        q->Q[q->rear]=p;
+    }
+}
+
+node* Queue::dequeue(Queue *q)
+{
+    node* temp=NULL;
+    if(q->front==q->rear)
+    cout<<"queue empty"<<endl;
+    else
+    {
+        q->front=(q->front+1)%q->size;
+        temp=q->Q[q->front];
+    }
+    return temp;
+}
+      
+void tree::preorder(node*p)
+{
+    if(p)
+    {
+        cout<<p->data;
+        preorder(p->lchild);
+        preorder(p->rchild);
+    }
+}
+int max(int a ,int b)
+{
+          return (a>b)?a:b;
+}
+int tree::height(node*p)
+{
+    if(p==NULL)
+    return 0;
+    int x=height(p->lchild);
+    int y=height(p->rchild);
+    return 1+max(x,y);
+}
+
+int main()
+{
+    tree t;
+    t.createtree();
+    cout<<t.height(t.root)<<endl;
+    t.l
+}

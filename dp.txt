@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+int i,j,t,n,sumleft,sumright,result,onediff,twodiff;
+int main()
+{
+    cin>>t;
+    if(t>=1&&t<=1000)
+    {
+        while(t--)
+        {
+            cin>>n;
+            char s[n][n];
+            int left[n],right[n];
+            for(i=0;i<n;i++)
+            {
+                cin>>s[i];
+                for(j=0;j<n/2;j++)
+                {
+                    if(s[i][j]=='1')
+                    left[i]++;
+                }
+                sumleft=sumleft+left[i];
+                for(j=n/2;j<n;j++)
+                {
+                    if(s[i][j]=='1')
+                    right[i]++;
+                }
+                if(left[i]>right[i])
+                if(onediff<(2*(left[i]-right[i])))
+                onediff=2*(left[i]-right[i]);
+                if(left[i]<right[i])
+                if(twodiff<(2*(right[i]-left[i])))
+                twodiff=2*(right[i]-left[i]);
+                sumright=sumright+right[i];
+            }
+            if(sumleft>sumright)
+            {
+                result=(sumleft-sumright)-onediff;
+            }
+            else if(sumright>sumleft)
+            {
+                result=(sumright-sumleft)-twodiff;
+            }
+        }
+    }
+}

@@ -1,0 +1,4 @@
+if address of node is i
+address of left node is 2i
+address of right nodee is 2i+1
+address of parent node is floor(i/2)

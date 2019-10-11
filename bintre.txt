@@ -1,0 +1,180 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+class node
+{
+    public:
+    int data;
+    node* lchild;
+    node* rchild;
+};
+ 
+class madtree
+{                
+    public:
+    node* root;
+    queue<node *>Q;
+    public:
+    madtree()
+    {
+        root=new node;
+        root->data=9;
+        root->lchild=NULL;
+        root->rchild=NULL;
+        Q.push(root);
+    }
+    void create()
+    {
+        while(!Q.empty())
+        {
+        node *p=Q.front();
+        Q.pop();
+        int x,y;
+        cin>>x;
+        if(x!=-1)
+        {
+            node *lc=new node;
+            lc->data=x;
+            lc->lchild=NULL;
+            lc->rchild=NULL;
+            p->lchild=lc;
+            Q.push(lc);
+        }
+        cin>>y;
+        if(y!=-1)
+        {
+            node *rc=new node;
+            rc->data=y;
+            rc->lchild=NULL;
+            rc->rchild=NULL;
+            p->rchild=rc;
+            Q.push(rc);
+        }
+        }
+    }
+    void preorder()
+    {
+        node *p=root;
+        stack<node *>s;
+        s.push(p);
+        while(!s.empty())
+        {
+            node *ds=s.top();
+            s.pop();
+            if(ds->rchild)
+            s.push(ds->rchild);
+            if(ds->lchild)
+            s.push(ds->lchild);
+            cout<<ds->data<<" ";
+        }
+        cout<<endl;
+    }
+    void postorder(node *p)
+    {
+        stack<node*> s;
+        int n=0;
+        while(!s.empty()||n==0)
+        {
+            n=1;
+            while(p->lchild&&p->rchild)
+            {
+                s.push(p);
+                p=p->lchild;
+            }
+            cout<<p->data<<endl;
+            p=NULL;
+            node* t=s.top();
+            if(t->rchild!=NULL)
+            s.push(t->rchild);
+            else
+            {
+                cout<<t->data<<endl;
+                t=NULL;
+            }
+            p=s.top();
+            s.pop();
+        }
+    }
+      int height(node *p)
+    {
+        static int count=0;
+        if(p)
+        return count=1+max(height(p->lchild),height(p->rchild));
+        return 0;
+    }
+    int count(node *p)
+    {
+        if(p)
+        {
+            int x=count(p->lchild);
+            int y=count(p->rchild);
+            return 1+x+y;
+        }
+        return 0;
+    }
+    int leaf(node *p)
+    {
+        int x,y;
+        if(p->lchild||p->rchild)
+        {
+            if(!(p->lchild))
+             x=0;
+            else
+            x=leaf(p->lchild);
+            if(!(p->rchild))
+            y=0;
+            else
+             y=leaf(p->rchild);
+            return x+y;
+        }
+        return 1;
+    }
+    int intc(node *p)
+    {
+        if(p)
+        {
+            if(p->rchild==NULL&&p->lchild==NULL)
+            return 0;
+            else
+            return 1+intc(p->lchild)+intc(p->rchild);
+        }
+        return 0;
+    }
+    void inserto(node *p,int key)
+    {
+        node *r=NULL;
+        while(p)
+        {
+            r=p;
+            if(p->data==key)
+            return;
+            else if(key<p->data)
+            p=p->lchild;
+            else if(key>p->data)
+            p=p->rchild;
+        }
+        node *t=new node;
+        t->lchild=t->rchild=NULL;
+        t->data=6;
+        /*if(r->data>key)
+        r->lchild=t;
+        else
+        r->rchild=t;*/
+        
+    }
+};
+ 
+int main()
+{
+    madtree t;
+    t.create();
+    t.preorder();
+    //t.postorder(t.root);
+    cout<<"height ="<<t.height(t.root)-1<<endl;
+    cout<<"numebr la node count="<<t.count(t.root)<<endl;
+    cout<<"number la leaf="<<t.leaf(t.root)<<endl;
+    cout<<"number la int nodes="<<t.intc(t.root)<<endl;
+    t.inserto(t.root,6);
+    cout<<"array after insertion is="<<endl;
+     t.preorder();
+}

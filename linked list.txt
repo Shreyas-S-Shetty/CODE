@@ -1,0 +1,86 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+	int data;
+	node*next;
+}*first;
+
+struct node* add(node*p)
+{
+    int x;
+	struct node*temp=(struct node*)malloc(sizeof(struct node));
+	cin>>x;
+	temp->data=x;
+	temp->next=NULL;
+	p->next=temp;
+	p=p->next;
+	return(p);
+}
+void display(node*p)
+{
+	while(p)
+	{
+		cout<<p->data<<"\t";
+		p=p->next;
+	}
+}
+void insert(struct node*p,int ele,int pos)
+{
+    int m=pos-1;
+    while(m--)
+    p=p->next;
+    struct node*ins=(struct node*)malloc(sizeof(struct node));
+    ins->data=ele;
+    ins->next=p->next;
+    p->next=ins;
+}
+void deletion(struct node*p,int pos)
+{
+    int m=pos-2;
+    while(m--)
+    p=p->next;
+    struct node*q=p;
+    q=q->next;
+    p->next=q->next;
+}
+void dup(node*p)
+{
+    struct node*q=p->next;
+    while(q)
+    {
+    if(p->data!=q->data)
+    {
+        p=p->next;
+        q=p->next;
+    }
+    else
+    {
+        p->next=q->next;
+        delete q;
+        q=p->next;
+    }
+    }
+}
+int main()
+{
+	first=(struct node*)malloc(sizeof(struct node));
+	first->data=1;
+	first->next=NULL;
+	struct node* t=(struct node*)malloc(sizeof(struct node));
+	t=first;
+	int i=4;
+	while(i--)
+	first=add(first);
+	cout<<"the original ll"<<endl;
+	display(t);
+	cout<<endl;
+	insert(t,3,2);
+	cout<<"array after insertion"<<endl;
+	display(t);
+	cout<<endl;
+	dup(t);
+	cout<<"array after removing dup"<<endl;
+	display(t);
+	cout<<endl;
+}

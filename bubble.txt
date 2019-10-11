@@ -1,0 +1,10 @@
+bubble and insertion
+1)both adaptive(means it does not swap if its already swapped) and stable(duplicate elements remain in their original position).
+
+2)bubble sort can be used to find the kth largest elements while selection sort can be used to find kth smallest elements.
+
+3)selection sort has only O(n) swaps while bubble and insertion sorts have O(n^2)swaps.
+
+4)selection sort is neither adapative nor  stable .
+
+5)merge sort is stable.

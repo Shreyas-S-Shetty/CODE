@@ -1,0 +1,187 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node
+{
+    public:
+    int data;
+    node *lchild;
+    node *rchild;
+}*root=NULL,*r=NULL;
+
+class create
+{
+    public:
+    void creato(int key)
+    {
+        if(root==NULL)
+        {
+            root=new node;
+            root->lchild=root->rchild=NULL;
+            root->data=key;
+        }
+        else
+        {
+            node *t=root;
+            while(t)
+            {
+                r=t;
+                if(key==t->data)
+                return;
+                else if(key>t->data)
+                t=t->rchild;
+                else if(key<t->data)
+                t=t->lchild;
+            }
+            node *p=new node;
+            p->data=key;
+            p->lchild=p->rchild=NULL;
+            if(key>r->data)
+            r->rchild=p;
+            else if(key<r->data)
+            r->lchild=p;
+        }
+    }
+    void preorder(node *p)
+    {
+       if(p)
+       {
+           cout<<p->data<<" ";
+           preorder(p->lchild);
+           preorder(p->rchild);
+       }
+    }
+    int height(node *p)
+    {
+        if(p==NULL)
+        return -1;
+        return 1+max(height(p->lchild),height(p->rchild));
+    }
+    pair<node*, node*> inorderleft(node *p)
+    {
+        while(p&&p->rchild!=NULL)
+        {
+        r=p;
+        p=p->rchild;
+        }
+        return make_pair(p,r);
+    }
+    pair<node*,node*> inorderright(node *p)
+    {
+        while(p&&p->lchild!=NULL)
+        {
+        r=p;
+        p=p->lchild;
+        }
+        return make_pair(p,r);
+    }
+    void deleto(node* p,int key)
+    {
+        if((key==p->data)&&(p->lchild==NULL&&p->rchild==NULL))
+        {
+            /*node *r=root;
+            while((r->lchild->data!=key)&&(r->rchild->data!=key))
+            {
+                if(key>r->data)
+                r=r->rchild;
+                else
+                r=r->lchild;
+            }
+            if(r->lchild->data==p->data)
+            r->lchild=NULL;
+            else
+            r->rchild=NULL;
+            free(p);*/
+            if(r->lchild->data==key)
+            r->lchild=NULL;
+            else
+            r->rchild=NULL;
+        }
+        else if(key>p->data)
+        deleto(p->rchild,key);
+        else if(key<p->data)
+        deleto(p->lchild,key);
+        else if(key==p->data)
+        {
+            if(height(p->lchild)>height(p->rchild))
+            {
+                pair<node *,node *> rp=inorderleft(p->lchild);
+                p->data=rp.first->data;
+                rp.first->data=key;
+                deleto(rp.first,key);
+            }
+            else
+            {
+                pair<node *,node *> rp=inorderright(p->rchild);
+                p->data=rp.first->data;
+                rp.first->data=key;
+                deleto(rp.first,key);
+            }
+        }
+    }
+    void doubly(node *p)
+    {
+        if(p)
+        {
+        if(p->rchild!=NULL)
+        doubly(p->rchild);
+        if(p!=NULL)
+        {
+            node *t=new node;
+            t->lchild=t->rchild=NULL;
+            t->data=p->data;
+            t->lchild=p->lchild;
+            p->lchild=t;
+            p=t;
+            doubly(p->lchild);
+        }
+        }
+    }
+    void printall(node *p,int arr[],int i,stack<int>&s)
+    {
+       if(p->lchild!=NULL||p->rchild!=NULL)
+       {
+           arr[i++]=p->data;
+           if(p->lchild)
+           {
+           if(p->lchild->lchild==NULL&&p->lchild->rchild==NULL)
+           s.push(p->lchild->data);
+           }
+           if(p->rchild)
+           {
+           if(p->rchild->lchild==NULL&&p->rchild->rchild==NULL)
+           s.push(p->rchild->data);
+           }
+           if(p->lchild)
+           printall(p->lchild,arr,i,s);
+           if(p->rchild)
+           printall(p->rchild,arr,i,s);
+       }
+    }
+};
+
+int main()
+{
+    create t;
+    t.creato(2);
+    t.creato(3);
+    t.creato(1);
+    t.creato(5);
+    t.creato(4);
+    cout<<"pre-order traversal\n";
+    t.preorder(root);
+    cout<<endl;
+    //t.deleto(root,22);
+    //cout<<"pre-order traversal after deletion\n";
+    //t.preorder(root);
+    //t.doubly(root);
+    //cout<<"after doubly\n";
+    //t.preorder(root);
+    //cout<<endl;
+
+    cout<<endl;
+    int arr[100];
+    stack<int>s;
+    t.printall(root,arr,0,s);
+    cout<<endl;
+}

@@ -1,0 +1,36 @@
+{
+     ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+    cin>>t;
+    if(t>=1&&t<=3)
+    {
+        while(t--)
+        {
+            cin>>n>>m;
+            long long int health[n+1],days[m+1],health1[n+1];
+            for(int i=1;i<n+1;i++)
+            cin>>health[i];
+            for(int j=1;j<m+1;j++)
+            cin>>days[j];
+            for(int i=1;i<=m;i++)
+            {
+                for(int j=i;j<=n;j+=i)
+                {
+                    health1[j]=health[j]-days[i];
+                    if(health1[j]<=0)
+                    {
+                        health[j]=-1;
+                        health1[j]=i;
+                    }
+                }
+            }
+            for(int i=1;i<=n;i++)
+            {
+                if(health[i]==-1)
+                cout<<health1[i]<<endl;
+                else if(health[i]>0)
+                cout<<-1<<endl;
+            }
+            fflush(stdout);
+        }
+    }
+}

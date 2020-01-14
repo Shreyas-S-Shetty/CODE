@@ -1,8 +1,3 @@
-/*-----------------C-O-D-I-N-G------------------------------
-  Code crafted by: derco 
-  ---------------------I-S----------------------------------
-  Jadavpur University, Information Technology.
-  --------------------A-R-T---------------------------------*/
 #include <bits/stdc++.h>
 #include <iostream>
 #include <boost/multiprecision/cpp_int.hpp> 
